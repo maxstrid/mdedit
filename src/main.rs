@@ -1,7 +1,7 @@
-use mdedit;
+mod markdown;
 
 fn main() {
-    let md: Vec<String> = match mdedit::read("example.md".to_string()) {
+    let md: Vec<String> = match markdown::read("example.md".to_string()) {
         Ok(data) => data,
         Err(err) => {
             println!("{:?}", err);
