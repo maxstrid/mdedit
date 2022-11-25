@@ -12,4 +12,9 @@ fn main() {
     for line in md {
         println!("{line}");
     }
+
+    match markdown::write("test.md".to_string(), "#Hello".to_string()) {
+        Err(err) => println!("{err:?}"),
+        _ => (),
+    }
 }

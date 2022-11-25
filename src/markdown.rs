@@ -1,3 +1,5 @@
+use std::fs::File;
+use std::io::Write;
 use std::path::Path;
 
 pub fn read(filename: String) -> Result<Vec<String>, String> {
@@ -23,4 +25,19 @@ pub fn read(filename: String) -> Result<Vec<String>, String> {
     };
 
     Ok(data.lines().map(|s| s.to_string()).collect())
+}
+
+pub fn write(filename: String, data: String) -> Result<(), String> {
+    let data = data.as_bytes();
+
+    let mut file = match File::create(filename.clone()) {
+        Ok(data) => data,
+        Err(_) => return Err(format!("Trouble writing to file {filename}")),
+    };
+
+    if file.write_all(data).is_err() {
+        return Err(format!("Trouble writing to file {filename}"));
+    }
+
+    Ok(())
 }
