@@ -7,3 +7,4 @@ edition = "2021"
 
 [dependencies]
 gtk = { version = "0.5.2", package = "gtk4" }
+tokio = "1.22.0"
