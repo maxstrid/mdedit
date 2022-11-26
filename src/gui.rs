@@ -1,17 +1,32 @@
-#![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
+use gtk::prelude::*;
+use gtk::{Application, ApplicationWindow};
 
-use eframe::egui;
-
-#[derive(Default)]
-pub struct Gui {
+pub struct Gui<'a> {
+    app: &'a Application,
     filename: Option<String>,
-    data: Option<Vec<String>>,
+    file_data: Option<String>,
 }
 
-impl eframe::App for Gui {
-    fn update(&mut self, ctx: &egui::Context, _frame: &mut eframe::Frame) {
-        egui::CentralPanel::default().show(ctx, |ui| {
-            ui.heading("Markdown Editor");
-        });
+impl<'a> Gui<'a> {
+    pub fn new(app: &'a Application) -> Self {
+        Self {
+            app,
+            filename: None,
+            file_data: None,
+        }
+    }
+
+    pub fn present(&mut self) {
+        let title = match &self.filename {
+            Some(filename) => format!("Markdown Editor {filename}"),
+            None => "Markdown Editor".to_string(),
+        };
+
+        let window = ApplicationWindow::builder()
+            .application(self.app)
+            .title(title.as_ref())
+            .build();
+
+        window.present();
     }
 }

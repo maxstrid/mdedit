@@ -1,14 +1,21 @@
-use eframe::egui;
+use gtk::prelude::*;
+use gtk::Application;
 
 mod gui;
 mod markdown;
 
-fn main() {
-    let options = eframe::NativeOptions::default();
+const APP_ID: &str = "io.github.maxstrid.MarkdownEditor";
 
-    eframe::run_native(
-        "Markdown Editor",
-        options,
-        Box::new(|_| Box::new(gui::Gui::default())),
-    )
+fn main() {
+    let app = Application::builder().application_id(APP_ID).build();
+
+    app.connect_activate(gui_main);
+
+    app.run();
+}
+
+fn gui_main(app: &Application) {
+    let mut gui = gui::Gui::new(app);
+
+    gui.present();
 }

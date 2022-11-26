@@ -2,7 +2,7 @@ use std::fs::File;
 use std::io::Write;
 use std::path::Path;
 
-pub fn read(filename: String) -> Result<Vec<String>, String> {
+pub fn read(filename: String) -> Result<String, String> {
     if !Path::new(&filename).exists() {
         return Err(format!("File {filename} not found"));
     }
@@ -24,7 +24,7 @@ pub fn read(filename: String) -> Result<Vec<String>, String> {
         Err(_) => return Err(format!("Uknown error with reading file {filename}")),
     };
 
-    Ok(data.lines().map(|s| s.to_string()).collect())
+    Ok(data)
 }
 
 pub fn write(filename: String, data: String) -> Result<(), String> {
